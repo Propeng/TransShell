@@ -46,7 +46,12 @@ class TransShell():
         command = split[0]
 
         # run command
-        print "DEBUG: command %s, args %s" % (command, args)
+        if command == "link":
+          pass
+        elif command == "unlink":
+          pass
+        else:
+          print "<> Unkown command: %s" % command
       else: #IRC command
         conn.send_raw(command)
 
