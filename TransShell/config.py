@@ -17,7 +17,7 @@
 
 class Config:
   server_name = "irc.foonet.com"
-  server_port = "6667"
+  server_port = 6667
   server_pass = None
   bot_nick    = "TransShell"
   bot_user    = "ts"

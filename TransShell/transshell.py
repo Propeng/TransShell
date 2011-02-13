@@ -16,6 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from config import Config
+import irclib
 
 def main():
   # connect to network and join channels
