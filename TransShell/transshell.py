@@ -20,9 +20,18 @@ import irclib
 
 class TransShell():
   def main(self):
-    # connect to network and join channels
+    print "[] Connecting to %s:%d" % (Config.server_name, Config.server_port)
+
+    # connect to network
     irc = irclib.IRC()
     server = irc.server()
     server.connect(Config.server_name, Config.server_port, Config.bot_nick, Config.server_pass, Config.bot_user, Config.bot_real)
-    server.join(Config.auto_join)
+
+    # handlers
+    irc.add_global_handler("welcome", self.welcome)
     irc.process_forever()
+
+  def welcome(self, connection, event):
+    print "[] Connected, auto-joining %s" % Config.auto_join
+    connection.join(Config.auto_join)
+    print "[] Ready. Allowing channel commands %s and private messages %s" % (Config.allow_chan, Config.allow_priv)

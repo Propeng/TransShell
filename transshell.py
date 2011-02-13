@@ -15,7 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from TransShell import transshell
+from TransShell.transshell import TransShell
 
 if __name__ == "__main__":
-  transshell.main()
+  ts = TransShell()
+  ts.main()
