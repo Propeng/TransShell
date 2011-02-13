@@ -18,8 +18,11 @@
 class Config:
   SERVER_NAME = "irc.foonet.com"
   SERVER_PORT = "6667"
-  CHANNEL     = "#channel1,#channel2"
+  BOT_NICK    = "TransShell"
+  BOT_USER    = "ts"
+  BOT_REAL    = "TransShell"
 
+  AUTO_JOIN   = "#channel1,#channel2"
   CHAN_PREFIX = ";"
   ALLOW_CHAN  = True
   ALLOW_PRIV  = True
