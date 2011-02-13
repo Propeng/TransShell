@@ -19,6 +19,9 @@ from config import Config
 import irclib
 
 class TransShell():
+  def __init__(self):
+    self.links = {}
+
   def main(self):
     print "[] Connecting to %s:%d" % (Config.server_name, Config.server_port)
 
