@@ -31,13 +31,24 @@ class TransShell():
     irc.add_global_handler("welcome", self.welcome)
     irc.process_forever()
 
-  def shell(self):
+  def shell(self, conn):
     while True:
+      # prompt for input
       command = raw_input("shell> ")
-      print "[TODO] perform %s" % command
+      if command.startswith(";"): #internal command
+        # split to command and args
+        internal = command[1:]
+        split = internal.split(' ')
+        args = split[1:]
+        command = split[0]
 
-  def welcome(self, connection, event):
+        # run command
+        print "DEBUG: command %s, args %s" % (command, args)
+      else: #IRC command
+        conn.send_raw(command)
+
+  def welcome(self, conn, event):
     print "[] Connected, auto-joining %s" % Config.auto_join
-    connection.join(Config.auto_join)
+    conn.join(Config.auto_join)
     print "[] Ready. Allowing channel commands %s and private messages %s" % (Config.allow_chan, Config.allow_priv)
-    self.shell()
+    self.shell(conn)
