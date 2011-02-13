@@ -31,7 +31,13 @@ class TransShell():
     irc.add_global_handler("welcome", self.welcome)
     irc.process_forever()
 
+  def shell(self):
+    while True:
+      command = raw_input("shell> ")
+      print "[TODO] perform %s" % command
+
   def welcome(self, connection, event):
     print "[] Connected, auto-joining %s" % Config.auto_join
     connection.join(Config.auto_join)
     print "[] Ready. Allowing channel commands %s and private messages %s" % (Config.allow_chan, Config.allow_priv)
+    self.shell()
