@@ -16,17 +16,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Config:
-  SERVER_NAME = "irc.foonet.com"
-  SERVER_PORT = "6667"
-  BOT_NICK    = "TransShell"
-  BOT_USER    = "ts"
-  BOT_REAL    = "TransShell"
+  server_name = "irc.foonet.com"
+  server_port = "6667"
+  bot_nick    = "TransShell"
+  bot_user    = "ts"
+  bot_real    = "TransShell"
 
-  AUTO_JOIN   = "#channel1,#channel2"
-  CHAN_PREFIX = ";"
-  ALLOW_CHAN  = True
-  ALLOW_PRIV  = True
+  auto_join   = "#channel1,#channel2"
+  chan_prefix = ";"
+  allow_chan  = True
+  allow_priv  = True
 
-  AUTH_TYPE   = 0 # 0 = no auth, 1 = AUTH_NICK, 2 = AUTH_PASS
-  #AUTH_NICK   = "adminnick"
-  #AUTH_PASS   = "secretpassword"
+  auth_type   = 0 # 0 = no auth, 1 = auth_nick, 2 = auth_pass
+  #auth_nick   = "adminnick"
+  #auth_pass   = "secretpassword"
