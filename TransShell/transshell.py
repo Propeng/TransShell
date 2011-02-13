@@ -18,10 +18,11 @@
 from config import Config
 import irclib
 
-def main():
-  # connect to network and join channels
-  irc = irclib.IRC()
-  server = irc.server()
-  server.connect(Config.server_name, Config.server_port, Config.bot_nick, Config.server_pass, Config.bot_user, Config.bot_real)
-  server.join(Config.auto_join)
-  irc.process_forever()
+class TransShell():
+  def main(self):
+    # connect to network and join channels
+    irc = irclib.IRC()
+    server = irc.server()
+    server.connect(Config.server_name, Config.server_port, Config.bot_nick, Config.server_pass, Config.bot_user, Config.bot_real)
+    server.join(Config.auto_join)
+    irc.process_forever()
