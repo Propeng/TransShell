@@ -15,11 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-try:
-  import pexpect
-except ImportError:
-  print "<> Unable to import pexpect. You are allowed to continue, but TransShell is likely to fail."
-
 class Link():
   def __init__(self, conn, command, args):
     self.conn = conn
