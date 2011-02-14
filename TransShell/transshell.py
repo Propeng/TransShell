@@ -53,8 +53,11 @@ class TransShell():
           else:
             self.links[args[0]] = Link(args[1], args[2:])
             self.links[args[0]].start()
+            conn.join(args[0])
+            conn.privmsg(args[0], "[] Linking %s to %s" % (args[1], args[0]))
         elif command == "unlink":
           if args[0] in self.links:
+            conn.privmsg(args[0], "[] Unlinking %s" % self.links[args[0]].command)
             self.links[args[0]].stop()
             del self.links[args[0]]
           else: #channel not linked
