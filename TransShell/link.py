@@ -15,6 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import sys, os, signal
+try:
+  import pty
+except ImportError:
+  print "<> ImportError: pty module was not found, exiting"
+  sys.exit(1)
+
 class Link():
   def __init__(self, conn, command, args):
     self.conn = conn
@@ -22,10 +29,15 @@ class Link():
     self.args = args
 
   def start(self):
-    pass
+    self.pid, self.child = pty.fork()
+    if self.pid == 0: #is child process?
+      finalargs = self.args
+      if self.args == []:
+        finalargs = [""]
+      os.execv(self.command, finalargs)
 
   def stop(self):
-    pass
+    os.kill(self.pid, signal.SIGKILL)
 
   def stdout_read(self):
     pass
