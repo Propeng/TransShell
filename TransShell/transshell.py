@@ -16,6 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from config import Config
+from link import Link
 import irclib
 
 class TransShell():
@@ -47,11 +48,19 @@ class TransShell():
 
         # run command
         if command == "link":
-          pass
+          if args[0] in self.links: #is channel already linked?
+            print "<> %s already linked to %s, unlink first" % (self.links[args[0]].command, args[0])
+          else:
+            self.links[args[0]] = Link(args[1], args[2:])
+            self.links[args[0]].start()
         elif command == "unlink":
-          pass
+          if args[0] in self.links:
+            self.links[args[0]].stop()
+            del self.links[args[0]]
+          else: #channel not linked
+            print "<> %s is not linked to a program" % args[0]
         else:
-          print "<> Unkown command: %s" % command
+          print "<> Unknown command: %s" % command
       else: #IRC command
         conn.send_raw(command)
 

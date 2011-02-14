@@ -16,8 +16,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Link():
-  def __init__(self):
-    pass
+  def __init__(self, command, args):
+    self.command = command
+    self.args = args
 
   def start(self):
     pass
