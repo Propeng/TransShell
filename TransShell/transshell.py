@@ -51,7 +51,7 @@ class TransShell():
           if args[0] in self.links: #is channel already linked?
             print "<> %s already linked to %s, unlink first" % (self.links[args[0]].command, args[0])
           else:
-            self.links[args[0]] = Link(args[1], args[2:])
+            self.links[args[0]] = Link(conn, args[1], args[2:])
             self.links[args[0]].start()
             conn.join(args[0])
             conn.privmsg(args[0], "[] Linking %s to %s" % (args[1], args[0]))

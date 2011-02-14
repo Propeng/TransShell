@@ -16,7 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Link():
-  def __init__(self, command, args):
+  def __init__(self, conn, command, args):
+    self.conn = conn
     self.command = command
     self.args = args
 
