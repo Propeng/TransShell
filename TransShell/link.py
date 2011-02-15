@@ -16,17 +16,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys, os, signal
+from threading import Timer
+from repeattimer import RepeatTimer
 try:
   import pty
-except ImportError:
-  print "<> ImportError: pty module was not found, exiting"
+except ImportreadError:
+  print "<> ImportreadError: pty module was not found, exiting"
   sys.exit(1)
 
 class Link():
-  def __init__(self, conn, command, args):
+  def __init__(self, conn, chan, command, args):
     self.conn = conn
+    self.chan = chan
     self.command = command
     self.args = args
+    self.queue = []
 
   def start(self):
     self.pid, self.child = pty.fork()
@@ -35,15 +39,30 @@ class Link():
       if self.args == []:
         finalargs = [""]
       os.execv(self.command, finalargs)
+    else:
+      self.rtread = Timer(1, self.syncout)
+      self.rtwrite = RepeatTimer(1, self.syncin)
+      self.rtread.start()
+      self.rtwrite.start()
 
   def stop(self):
+    self.rtread.cancel()
+    self.rtwrite.cancel()
     os.kill(self.pid, signal.SIGKILL)
 
-  def stdout_read(self):
-    pass
+  def syncin(self):
+    if self.queue != []:
+      for line in self.queue:
+        os.write(self.child, line + "\r\n")
+      self.queue = []
 
-  def stderr_read(self):
-    pass
-
-  def stdin_write(self):
-    pass
+  def syncout(self):
+    try:
+      readstr = os.read(self.child, 1024)
+      lines = readstr.splitlines()
+      for line in lines:
+        self.conn.privmsg(self.chan, "[%s] %s" % (self.command, line))
+      self.rtread = Timer(1, self.syncout)
+      self.rtread.start()
+    except OSError:
+      self.conn.privmsg(self.chan, "[] %s terminated" % self.command)
