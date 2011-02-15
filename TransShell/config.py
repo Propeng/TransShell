@@ -32,4 +32,4 @@ class Config:
   #auth_nick   = "adminnick"
   #auth_pass   = "secretpassword"
 
-  custom_env  = {"PS1", "\\$"} # extra environment variables
+  custom_env  = {"PS1": "\\$"} # extra environment variables
