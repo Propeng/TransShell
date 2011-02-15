@@ -31,3 +31,5 @@ class Config:
   auth_type   = 0 # 0 = no auth, 1 = auth_nick, 2 = auth_pass
   #auth_nick   = "adminnick"
   #auth_pass   = "secretpassword"
+
+  custom_env  = {"PS1", "\\$"} # extra environment variables
