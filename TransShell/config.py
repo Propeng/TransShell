@@ -28,8 +28,8 @@ class Config:
   allow_chan  = True
   allow_priv  = True
 
-  auth_type   = 0 # 0 = no auth, 1 = auth_nick, 2 = auth_pass
-  #auth_nick   = "adminnick"
-  #auth_pass   = "secretpassword"
+  auth_type   = 0 # 0 = no auth, 1 = auth_user, 2 = auth_login
+  #auth_user   = "admin_username"
+  #auth_login  = "secretpassword"
 
   custom_env  = {"PS1": "\\$"} # extra environment variables
