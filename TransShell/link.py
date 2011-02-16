@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys, os, signal
+import sys, os, signal, itertools
 from threading import Timer
 from repeattimer import RepeatTimer
 try:
@@ -40,14 +40,14 @@ class Link():
         finalargs = [""]
       os.execv(self.command, finalargs)
     else:
-      self.rtread = Timer(1, self.syncout)
-      self.rtwrite = RepeatTimer(1, self.syncin)
-      self.rtread.start()
-      self.rtwrite.start()
+      self.intimer = RepeatTimer(1, self.syncin)
+      self.outtimer = Timer(1, self.syncout)
+      self.intimer.start()
+      self.outtimer.start()
 
   def stop(self):
-    self.rtread.cancel()
-    self.rtwrite.cancel()
+    self.intimer.cancel()
+    self.outtimer.cancel()
     os.kill(self.pid, signal.SIGKILL)
 
   def syncin(self):
@@ -59,10 +59,11 @@ class Link():
   def syncout(self):
     try:
       readstr = os.read(self.child, 1024)
-      lines = readstr.splitlines()
+      lines = itertools.groupby(readstr.splitlines())
       for line in lines:
-        self.conn.privmsg(self.chan, "[%s] %s" % (self.command, line))
-      self.rtread = Timer(1, self.syncout)
-      self.rtread.start()
+        if line[0] != "":
+          self.conn.privmsg(self.chan, "[%s] %s" % (self.command, line[0]))
+      self.outtimer = Timer(2, self.syncout)
+      self.outtimer.start()
     except OSError:
       self.conn.privmsg(self.chan, "[] %s terminated" % self.command)
